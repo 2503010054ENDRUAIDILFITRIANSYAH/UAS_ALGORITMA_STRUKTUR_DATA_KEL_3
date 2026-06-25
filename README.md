@@ -5,7 +5,7 @@ Program basis data berbasis teks (CLI) yang dirancang untuk mengelola katalog pr
 ---
 
 ## 👥 Anggota Kelompok 3
-* **Endru Aidil Fitriansyah (Idil)** - Lead Developer & Modul Rekomendasi/Riwayat (Stack)
+* **Endru Aidil Fitriansyah ** - Lead Developer  file utama main & Modul Rekomendasi/Riwayat (Stack)
 * **Fitriani** - Modul Manajemen Produk (Singly Linked List)
 * **Diky** - Modul Pencarian & Pengurutan (Linear Search & Bubble Sort)
 * **Maulana** - Modul Antrean Transaksi (Queue)
