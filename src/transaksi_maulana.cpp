@@ -1,99 +1,88 @@
-bool queuekosong()
-{
-    return antrianTransaksi.depan > antrianTransaksi.belakang;
-}
-bool queuepenuh()
-{
-    return antrianTransaksi.belakang == MAX QUEUE-1;
-}
-void enqueue (transaksi t)
-{
-    antrianTransaksi.belakang++;
-    antrianTransaksi.data[antrianTransaksi.belakang]=t;
-}
-void dequeue ()
-{
-    antrianTransaksi.depan++;
-}
-Transaksi frontqueue ()
-{
-    return antrianTransaksi.data[antrianTransaksi.depan];
-}
-void beliProduk(){
 
-    tampilProduk();
-    
-    int id;
-    int jumlah;
 
-    string pembeli;
-    sin.ignore();
-
-    cout<<"\nNama Pembeli :";
-    getline (cin.pembeli);
-
-    cout<<"Masukan ID Produk :";
-    cin>>id;
-
-    cout<<"Jumlah Barang :";
-    cin>>jumlah;
-
-    for (int i=0; i < jumlahProduk,i++);
-    {
-        if (daftarProduk[i].id == id);
-        {
-            if(jumlah > daftarProduk[i].stok);
-            {
-                cout << "\nStok Tidak Mencukupi.\n";
-                return;
-            }
-
-            transaksi t;
-
-            t.pembeli = pembeli;
-            t.idProduk = id;
-            t.namaProduk = daftarProduk[i].nama;
-            t.jumlah = jumlah;
-            t.total = jumlah *daftarProduk[i].harga;
-            
-            enqueue (t);
-
-            tambahAktivitas("Masuk Antrean");
-
-            cout << "\nMasuk Antrean Transaksi.\n";
-            return;
-        }
-        
-    }
-
-    cout <<"\nProduk Tidak Ditemukan.\n";
-}
-void prosesTransaksi()
-{
-    if(queuekosong ())
-    {
-        cout<<"\nAntrian Kosong.\n";
+void beliProduk() {
+    if (headProduk == NULL) {
+        cout << "\n[!] Belum ada produk yang bisa dibeli." << endl;
         return;
     }
-    
-    Transaksi t =frontqueue()
-    for(int i=0;i <jumlahProduk;i++);
-    {
-        if(daftarProduk[i].id == t.idProduk);
-        {
-            daftarProduk[i].stok -= t.jumlah;
-            break;
-        }
+
+    int idBeli, jumlah;
+    string namaPembeli;
+
+    cout << "\n=== TAMBAH KE ANTREAN PEMBELIAN ===" << endl;
+    cout << "Masukkan Nama Pembeli        : "; cin >> ws; getline(cin, namaPembeli);
+    cout << "Masukkan ID Produk yang dibeli: "; cin >> idBeli;
+
+    // Pencarian produk menggunakan Linked List
+    Produk* tempP = headProduk;
+    while (tempP != NULL && tempP->id != idBeli) {
+        tempP = tempP->next;
     }
 
-    cout <<"\nTransaksi Sedang Di Proses";
-    cout <<"\nPembeli :" << t.pembeli ;
-    cout <<"\nProduk :" << t.namaProduk ;
-    cout <<"\nTotal :" << t.total << endl;
+    if (tempP == NULL) {
+        cout << "[!] Produk tidak ditemukan!" << endl;
+        return;
+    }
 
-    dequeue ();
+    cout << "Produk: " << tempP->nama << " | Harga: Rp" << tempP->harga << " | Stok Tersedia: " << tempP->stok << endl;
+    cout << "Masukkan Jumlah Beli         : "; cin >> jumlah;
 
-    tambahAktivitas("Proses Transaksi");
+    if (jumlah > tempP->stok) {
+        cout << "[!] Maaf, stok tidak mencukupi untuk pembelian ini." << endl;
+        return;
+    }
 
+
+    tempP->stok -= jumlah;
+
+
+    Antrean* pesananBaru = new Antrean;
+    pesananBaru->idProduk = tempP->id;
+    pesananBaru->namaProduk = tempP->nama;
+    pesananBaru->namaPembeli = namaPembeli; 
+    pesananBaru->jumlahBeli = jumlah;
+    pesananBaru->totalHarga = tempP->harga * jumlah;
+    pesananBaru->next = NULL;
+
+    if (rearQueue == NULL) { 
+        frontQueue = rearQueue = pesananBaru;
+    } else {
+        rearQueue->next = pesananBaru;
+        rearQueue = pesananBaru;
+    }
+
+    cout << "[+] Pesanan atas nama '" << namaPembeli << "' berhasil masuk ke antrean!" << endl;
+    
+    pushRiwayat("Pembeli (" + namaPembeli + ") memasukkan produk '" + tempP->nama + "' ke dalam keranjang");
 }
 
+void prosesTransaksi() {
+    if (frontQueue == NULL) {
+        cout << "\n[!] Tidak ada antrean pesanan saat ini." << endl;
+        return;
+    }
+
+    // Mengambil antrean paling depan 
+    Antrean* pesananDiproses = frontQueue;
+    frontQueue = frontQueue->next;
+    
+    if (frontQueue == NULL) {
+        rearQueue = NULL; 
+    }
+
+    // Cetak Struk Belanja
+    cout << "\n=========================================" << endl;
+    cout << "          STRUK TRANSAKSI (LUNAS)        " << endl;
+    cout << "=========================================" << endl;
+    cout << "Nama Pembeli : " << pesananDiproses->namaPembeli << endl;
+    cout << "Barang       : " << pesananDiproses->namaProduk << endl;
+    cout << "Jumlah       : " << pesananDiproses->jumlahBeli << endl;
+    cout << "Total Bayar  : Rp" << pesananDiproses->totalHarga << endl;
+    cout << "=========================================" << endl;
+
+    
+    pushRiwayat("Kasir memproses pembayaran (" + pesananDiproses->namaPembeli + ") untuk produk " + pesananDiproses->namaProduk);
+    
+
+    delete pesananDiproses;
+}
