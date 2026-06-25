@@ -5,7 +5,7 @@ void cariProduk(){
 	}
 	
 	int cariId;
-	cout<<"\nMasukan ID Produk yang dicari";
+	cout<<"\nMasukan ID Produk yang dicari :";
 	cin>>cariId;
 	
 	Produk* current =headProduk;
@@ -62,5 +62,7 @@ void urutkanProduk(){
 	}
 	cout<<"\n[+] Produk berhasil diurutkan berdasarkan harga termurah!"<<endl;
 	cout<<"[*]Silahkan pilih menu 'Tampilkan Semua Produk' untuk melihat hasilnya."<<endl;
+	
+	pushRiwayat("Pembeli mengurutkan katalog produk dari harga termurah");
 	
 }
