@@ -19,7 +19,7 @@ void tambahProduk(){
 	
 }
 
-void tampikanProduk(){
+void tampilkanProduk(){
 	if(headProduk == NULL){
 		cout<<"Katalog produk masih kosong."<<endl;
 		return;
@@ -32,7 +32,7 @@ void tampikanProduk(){
 		temp=temp->next;
 	}
 	
-	PushRiwayat("Pembeli membuka katalog dan melihat semua produk");
+	pushRiwayat("Pembeli membuka katalog dan melihat semua produk");
 }
 
 void kelolaStok(){
@@ -55,6 +55,6 @@ void kelolaStok(){
 		}
 		temp = temp->next;
 	}
-	cout<<"Produk denga ID "<<idCari<<" tidak ditemukan."<<endl;
+	cout<<"Produk dengan ID "<<idCari<<" tidak ditemukan."<<endl;
 	
 }
