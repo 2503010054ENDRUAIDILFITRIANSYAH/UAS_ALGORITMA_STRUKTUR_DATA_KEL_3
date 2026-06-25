@@ -18,6 +18,7 @@ struct Produk {
 struct Antrean {
     int idProduk;
     string namaProduk;
+    string namaPembeli;
     int jumlahBeli;
     int totalHarga;
     Antrean* next;
@@ -36,8 +37,9 @@ Antrean* frontQueue = NULL;  // Depan Antrean (untuk ambil/proses)
 Antrean* rearQueue = NULL;   // Belakang Antrean (untuk tambah beli)
 Riwayat* topStack = NULL;    // Puncak Tumpukan Riwayat
 
+void pushRiwayat(string aksi);
+
 // 3. INTEGRASI BERKAS KODE ANGGOTA KELOMPOK
-// File include ditaruh di sini agar bisa membaca struct & pointer di atas
 #include "produk_fitriani.cpp"
 #include "pencarian_diky.cpp"
 #include "transaksi_maulana.cpp"
